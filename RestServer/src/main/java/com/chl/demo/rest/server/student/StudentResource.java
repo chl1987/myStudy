@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * 业务接口定义
+ * Student业务接口定义
  * Created by caodongdong on 2017-02-07.
  */
 

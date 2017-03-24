@@ -1,6 +1,5 @@
 package com.chl.demo.rest.server.student.service.impl;
 
-import com.chl.demo.rest.server.student.entity.Student;
 import com.chl.demo.rest.server.student.service.AddStudentService;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +9,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AddStudentServiceImpl implements AddStudentService {
-    @Override
-    public void save(Student student) {
-// TODO
-    }
 }
