@@ -14,7 +14,7 @@ public interface StudentDao extends JpaRepository<StudentEntity, Integer> {
 
     List<StudentEntity> findByName(String name);
 
-    @Query("SELECT s FROM StudentEntity s WHERE s.name = con.name and s.age = con.age")
-    List<StudentEntity> findByCondition(StudentEntity con);
+   @Query("select s from StudentEntity s where s.name = ?1 and s.age = ?2")
+   List<StudentEntity> findByCondition(String name,int age);
 
 }

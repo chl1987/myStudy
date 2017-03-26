@@ -42,7 +42,7 @@ public class QueryStudentServiceImpl implements QueryStudentService {
     @Override
     public List<StudentInfo> findByCondition(StudentInfo info) {
         StudentEntity entity = new StudentEntity(info);
-        return entitiesToInfos(studentDao.findByCondition(entity));
+        return entitiesToInfos(studentDao.findByCondition(entity.getName(), entity.getAge()));
     }
 
     private List<StudentInfo> entitiesToInfos(List<StudentEntity> entities)
