@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
  * 公共异常类
  * Created by caodongdong on 2017-02-07.
  */
-@ResponseStatus(Response.Status.BAD_REQUEST)
+@ResponseStatus(Response.Status.OK)
 public class CommonException extends RuntimeException {
 
     private String retCode;

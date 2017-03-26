@@ -1,7 +1,6 @@
 package com.chl.demo.rest.server.student.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.chl.demo.rest.server.student.entity.StudentEntity;
 
 /**
  * 接口请求消息体，只用于返回给接口调用者
@@ -9,18 +8,19 @@ import javax.persistence.Id;
  * Created by caodongdong on 2017-02-07.
  */
 public class StudentInfo {
-    @GeneratedValue
-    @Id
     private int id;
+
+    private int age;
 
     private String name;
 
     public StudentInfo() {
     }
 
-    public StudentInfo(int id, String name) {
-        this.name = name;
-        this.id = id;
+    public StudentInfo(StudentEntity entity) {
+        this.id = entity.getId();
+        this.age = entity.getAge();
+        this.name = entity.getName();
     }
 
     public String getName() {
@@ -39,4 +39,11 @@ public class StudentInfo {
         this.id = id;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

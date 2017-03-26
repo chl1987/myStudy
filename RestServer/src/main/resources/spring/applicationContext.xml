@@ -11,7 +11,7 @@
 
 
     <!-- Spring扫描包，排除springMVC扫描的包，重复扫描会有问题-->
-    <context:component-scan base-package="com.chl.demo">
+    <context:component-scan base-package="com.chl.demo.*">
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation"
@@ -19,61 +19,10 @@
     </context:component-scan>
 
 
-    <!--配置数据源-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 
-        <property name="user" value="${user}"/>
-        <property name="password" value="${password}"/>
-        <property name="driverClass" value="${drive}"/>
-        <property name="jdbcUrl" value="${url}"/>
-    </bean>
+    <import resource="classpath:spring/spring-data-jpa.xml"/>
 
-
-    <!--jpa管理工厂-->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-
-        <!--数据源-->
-        <property name="dataSource" ref="dataSource"/>
-        <!--适配器-->
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-        </property>
-
-        <!--扫描包-->
-        <property name="packagesToScan" value="com.chl.demo"/>
-
-        <!--基本配置-->
-        <property name="jpaProperties">
-            <props>
-                <!--命名策略-->
-                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-
-                <!--基本配置-->
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-
-                <!--二级缓存-->
-                <prop key="hibernate.cache.use_query_cache">true</prop>
-                <prop key="hibernate.cache.use_second_level_cache">true</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-            </props>
-        </property>
-
-        <property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>
-    </bean>
-
-
-    <!--配置事务-->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
-
-    <!--配置基于注解的事务-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--配置spring data-->
-    <jpa:repositories base-package="com.chl.demo" entity-manager-factory-ref="entityManagerFactory"/>
+    <!-- Scans within the base package of the application for @Component classes to configure as beans -->
+    <context:component-scan base-package="com.chl.demo.*"/>
 
 </beans>

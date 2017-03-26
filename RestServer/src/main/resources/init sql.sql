@@ -1,0 +1,10 @@
+CREATE DATABASE  IF NOT EXISTS `chltest`;
+USE `chltest`;
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `t_student` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `age` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
