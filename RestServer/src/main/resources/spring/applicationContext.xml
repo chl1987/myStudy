@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
 
     <!--加载配置文件-->
     <context:property-placeholder location="classpath:db.properties"/>
@@ -21,4 +23,18 @@
     <!-- spring根目录扫描 -->
     <context:component-scan base-package="com.chl.demo.*"/>
 
+           <bean id="lockManager" class="com.chl.demo.rest.server.common.lock.LockManager">
+        <constructor-arg name="lockRepository" ref="lockRepository" />
+        <constructor-arg name="transactionManager" ref="transactionManager" />
+    </bean>
+
+    <bean id="lockRepository"
+          class="com.chl.demo.rest.server.common.lock.repository.jpa.JpaLockRepository">
+        <constructor-arg name="entityManagerProvider" ref="entityManagerProvider" />
+    </bean>
+
+    <bean id="entityManagerProvider"
+          class="org.axonframework.common.jpa.ContainerManagedEntityManagerProvider" />
+
+       
 </beans>
