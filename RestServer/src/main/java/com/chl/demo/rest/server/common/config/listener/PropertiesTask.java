@@ -17,7 +17,7 @@ import java.util.TimerTask;
  */
 public class PropertiesTask extends TimerTask
 {
-    private static final Logger LOG = LoggerFactory.getLogger(PropertiesListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PropertiesTask.class);
 
     private ServletContext context = null;
 
