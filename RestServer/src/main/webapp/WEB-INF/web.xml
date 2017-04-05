@@ -14,9 +14,9 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <listener>
+<!--    <listener>
         <listener-class>com.chl.demo.rest.server.common.config.listener.PropertiesListener</listener-class>
-    </listener>
+    </listener>-->
 
     <!--处理中文编码-->
     <filter>

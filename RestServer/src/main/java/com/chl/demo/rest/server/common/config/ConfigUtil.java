@@ -12,10 +12,9 @@ import java.util.Properties;
 
 /**
  * 配置读写工具
- * Created by c00313269 on 2017-03-30.
+ * Created by caodongdong on 2017-03-30.
  */
-public abstract class ConfigUtil
-{
+public abstract class ConfigUtil {
     private static final Logger LOG = LoggerFactory.getLogger(ConfigUtil.class);
 
     private static final String CONFIG_HOME = ConfigUtil.class.getClassLoader().getResource("").getPath();
@@ -26,89 +25,65 @@ public abstract class ConfigUtil
 
     private static Properties jdbcProps = new Properties();
 
-    static
-    {
+    static {
         ConfigUtil.loadProperties();
     }
 
-    public static String getVal(String name)
-    {
+    public static String getVal(String name) {
         return getVal(name, "");
     }
 
-    public static String getVal(String name, String defaultValue)
-    {
+    public static String getVal(String name, String defaultValue) {
         String val = jdbcProps.getProperty(name);
-        if (StringUtils.isEmpty(val))
-        {
+        if (StringUtils.isEmpty(val)) {
             return defaultValue;
         }
         return val;
     }
 
-    public static void loadProperties()
-    {
+    public static void loadProperties() {
         loadProperties(DB_CONFIG);
         loadProperties(CONFIG_HOME + "sysconfig.properties");
     }
 
-    public static void loadProperties(String fileName)
-    {
+    public static void loadProperties(String fileName) {
         InputStream is = null;
-        try
-        {
-            if (!isFileUpdated(fileName))
-            {
+        try {
+            if (!isFileUpdated(fileName)) {
                 return;
             }
 
             is = new FileInputStream(fileName);
-            if (is.available() > 0)
-            {
+            if (is.available() > 0) {
                 jdbcProps.load(is);
 
                 LOG.info("load Properties succ, filePath: {}", fileName);
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             LOG.error("load Properties fail : filePath is " + fileName + ", exception is ", e);
-        }
-        finally
-        {
-            try
-            {
-                if (is != null)
-                {
+        } finally {
+            try {
+                if (is != null) {
                     is.close();
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 LOG.error("inputStream close fail : filePath is" + fileName + ", exception is ", e);
             }
         }
     }
 
-    private static boolean isFileUpdated(String filename)
-    {
+    private static boolean isFileUpdated(String filename) {
         File file = new File(filename);
-        if (file.isFile())
-        {
+        if (file.isFile()) {
             long lastUpdateTime = file.lastModified();
-            if (lastUpdateTime > lastModifiedOfDbConfig)
-            {
+            if (lastUpdateTime > lastModifiedOfDbConfig) {
                 LOG.info("File {} was modified.", filename);
                 lastModifiedOfDbConfig = lastUpdateTime;
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             LOG.error("Path {} does not point to a file.", filename);
             return false;
         }

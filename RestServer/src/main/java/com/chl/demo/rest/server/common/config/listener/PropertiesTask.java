@@ -15,8 +15,7 @@ import java.util.TimerTask;
  * 配置更新任务
  * Created by caodongdong on 2017-03-30.
  */
-public class PropertiesTask extends TimerTask
-{
+public class PropertiesTask extends TimerTask {
     private static final Logger LOG = LoggerFactory.getLogger(PropertiesTask.class);
 
     private ServletContext context = null;
@@ -32,16 +31,14 @@ public class PropertiesTask extends TimerTask
      *
      * @param context
      */
-    public PropertiesTask(ServletContext context)
-    {
+    public PropertiesTask(ServletContext context) {
         this.context = context;
     }
 
     /**
      * 监听配置文件是否被更新。
      */
-    public void todoTestFileStatus()
-    {
+    public void todoTestFileStatus() {
         System.out.println("Getting file status");
         System.out.println(this.isFileUpdated("WEB-INF/platforms/test.properties"));
     }
@@ -49,19 +46,14 @@ public class PropertiesTask extends TimerTask
     /**
      * 监听配置文件是否被更新，自动更新文件中的配置项存储到 application 变量中。
      */
-    public void todo()
-    {
+    public void todo() {
         String filename = "WEB-INF/platforms/test.properties";
-        if (this.isFileUpdated(filename))
-        {
+        if (this.isFileUpdated(filename)) {
 
             System.out.println("Getting properties");
-            try
-            {
+            try {
                 this.loadProperties("test", filename);
-            }
-            catch (IOException ioe)
-            {
+            } catch (IOException ioe) {
                 System.err.println(ioe.getMessage());
             }
         }
@@ -69,16 +61,8 @@ public class PropertiesTask extends TimerTask
     }
 
     @Override
-    public void run()
-    {
-//        String val = ConfigUtil.getVal("jdbc.driverClassName");
-
+    public void run() {
         ConfigUtil.loadProperties();
-//        LOG.info("todo: reload the properties! val = {}", val);
-//        String aaaa = ConfigUtil.getVal("A");
-
-//        ConfigUtil.loadProperties();
-//        LOG.info("todo: reload the properties! aaaa = {}", aaaa);
     }
 
     /**
@@ -87,26 +71,19 @@ public class PropertiesTask extends TimerTask
      * @param filename 物理文件名
      * @return 是 true 否 false
      */
-    private boolean isFileUpdated(String filename)
-    {
+    private boolean isFileUpdated(String filename) {
         File file = new File(context.getRealPath(filename));
-        if (file.isFile())
-        {
+        if (file.isFile()) {
             long lastUpdateTime = file.lastModified();
-            if (lastUpdateTime > this.lastModified)
-            {
+            if (lastUpdateTime > this.lastModified) {
                 System.out.println("The properties file was modified.");
                 this.lastModified = lastUpdateTime;
                 return true;
-            }
-            else
-            {
+            } else {
                 System.out.println("The properties file was not modified.");
                 return false;
             }
-        }
-        else
-        {
+        } else {
             System.out.println("The path does not point to a file.");
             return false;
         }
@@ -119,13 +96,11 @@ public class PropertiesTask extends TimerTask
      * @param filename
      * @return
      */
-    public void loadProperties(String key, String filename) throws IOException
-    {
+    public void loadProperties(String key, String filename) throws IOException {
         Properties prop = new Properties();
         InputStream stream = context.getResourceAsStream(filename);
         prop.load(stream);
-        if (stream != null)
-        {
+        if (stream != null) {
             stream.close();
         }
         context.setAttribute(key, prop);
@@ -137,15 +112,11 @@ public class PropertiesTask extends TimerTask
      * @param key 配置项的键名
      * @return 配置项的值
      */
-    public String getTestProperty(String key)
-    {
+    public String getTestProperty(String key) {
         Properties prop = (Properties) context.getAttribute("test");
-        if (prop == null)
-        {
+        if (prop == null) {
             return null;
-        }
-        else
-        {
+        } else {
             return (String) prop.get(key);
         }
     }

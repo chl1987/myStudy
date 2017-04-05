@@ -12,8 +12,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  * LockManager
  * Created by caodongdong on 2017-04-01.
  */
-public class LockManager
-{
+public class LockManager {
     /**
      * 日志类
      */
@@ -30,37 +29,31 @@ public class LockManager
     private final PlatformTransactionManager transactionManager;
 
 
-    public LockManager (LockRepository lockRepository,
-            PlatformTransactionManager transactionManager)
-    {
+    public LockManager(LockRepository lockRepository,
+                       PlatformTransactionManager transactionManager) {
         this.lockRepository = lockRepository;
         this.transactionManager = transactionManager;
     }
 
     /**
      * 尝试获取锁
-     * @param lockId
-     *      锁ID
-     * @return
-     *      取到锁则返回true，否则返回false
+     *
+     * @param lockId 锁ID
+     * @return 取到锁则返回true，否则返回false
      */
-    public boolean tryToGetLock (String lockId)
-    {
+    public boolean tryToGetLock(String lockId) {
 
         boolean isGet = this.getLock(lockId);
 
         //成功取到锁
-        if (isGet)
-        {
+        if (isGet) {
             return isGet;
         }
 
         //取不到锁，判断是否锁超时。如果超时则先释放锁，并尝试再一次获取锁。
-        if (!isGet)
-        {
+        if (!isGet) {
             boolean isTimeout = lockRepository.isTimeout(lockId);
-            if (isTimeout)
-            {
+            if (isTimeout) {
                 //释放锁
                 this.releaseLock(lockId);
 
@@ -74,40 +67,33 @@ public class LockManager
 
     /**
      * 释放锁
-     * @param lockId
-     *      锁ID
+     *
+     * @param lockId 锁ID
      */
-    public void releaseLock (String lockId)
-    {
+    public void releaseLock(String lockId) {
         TransactionStatus tx = SpringTransactionUtils.startTransaction(transactionManager,
                 DefaultTransactionDefinition.PROPAGATION_REQUIRES_NEW);
-        try
-        {
+        try {
             lockRepository.releaseLock(lockId);
 
             SpringTransactionUtils.commit(transactionManager, tx);
 
-            if (LOGGER.isDebugEnabled())
-            {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Success to release the lock:{} ", lockId);
             }
-        }
-        catch (RuntimeException ex)
-        {
+        } catch (RuntimeException ex) {
             LOGGER.error("Try and release lock {} failed! ex = ", lockId, ex);
             SpringTransactionUtils.rollback(transactionManager, tx);
         }
     }
 
     /**
-     *      获取锁
-     * @param lockId
-     *      锁ID
-     * @return
-     *      是否成功获取
+     * 获取锁
+     *
+     * @param lockId 锁ID
+     * @return 是否成功获取
      */
-    private boolean getLock (String lockId)
-    {
+    private boolean getLock(String lockId) {
         boolean isGet = false;
 
         LOGGER.info(" ======== 1 ==========!");
@@ -126,27 +112,21 @@ public class LockManager
 //            LOGGER.error("sleep with error!", e);
 //        }
 
-        try
-        {
+        try {
             isGet = lockRepository.tryToGetLock(lockId);
 
 
             LOGGER.info(" ======== 3 ==========!{}", isGet);
-            try
-            {
+            try {
                 Thread.sleep(10000);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 LOGGER.error("sleep with error!", e);
             }
 
             SpringTransactionUtils.commit(transactionManager, tx);
 
             LOGGER.info(" ======== 4 ==========!");
-        }
-        catch (RuntimeException ex)
-        {
+        } catch (RuntimeException ex) {
             LOGGER.error("Try and get lock {} failed! ex = ", lockId, ex);
             SpringTransactionUtils.rollback(transactionManager, tx);
         }

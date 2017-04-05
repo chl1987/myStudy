@@ -20,21 +20,4 @@
     <!--jpa配置-->
     <import resource="classpath:spring/spring-data-jpa.xml"/>
 
-    <!-- spring根目录扫描 -->
-    <context:component-scan base-package="com.chl.demo.*"/>
-
-           <bean id="lockManager" class="com.chl.demo.rest.server.common.lock.LockManager">
-        <constructor-arg name="lockRepository" ref="lockRepository" />
-        <constructor-arg name="transactionManager" ref="transactionManager" />
-    </bean>
-
-    <bean id="lockRepository"
-          class="com.chl.demo.rest.server.common.lock.repository.jpa.JpaLockRepository">
-        <constructor-arg name="entityManagerProvider" ref="entityManagerProvider" />
-    </bean>
-
-    <bean id="entityManagerProvider"
-          class="org.axonframework.common.jpa.ContainerManagedEntityManagerProvider" />
-
-       
 </beans>

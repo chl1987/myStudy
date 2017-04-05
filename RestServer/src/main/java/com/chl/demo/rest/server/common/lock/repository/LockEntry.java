@@ -5,14 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- *
  * 定时任务锁相关信息表
- *
+ * <p>
  * Created by caodongdong on 2016/4/9.
  */
 @Entity(name = "lockentry")
-public class LockEntry
-{
+public class LockEntry {
     @Id
     private String lockId;
 
@@ -28,58 +26,48 @@ public class LockEntry
     @Basic
     private String updateTime;
 
-    public String getLockId ()
-    {
+    public String getLockId() {
         return lockId;
     }
 
-    public void setLockId (String lockId)
-    {
+    public void setLockId(String lockId) {
         this.lockId = lockId;
     }
 
-    public int getStatus ()
-    {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus (int status)
-    {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public long getVersion ()
-    {
+    public long getVersion() {
         return version;
     }
 
-    public void setVersion (long version)
-    {
+    public void setVersion(long version) {
         this.version = version;
     }
 
-    public int getTimeOut ()
-    {
+    public int getTimeOut() {
         return timeOut;
     }
 
-    public void setTimeOut (int timeOut)
-    {
+    public void setTimeOut(int timeOut) {
         this.timeOut = timeOut;
     }
 
-    public String getUpdateTime ()
-    {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime (String updateTime)
-    {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
-    @Override public String toString ()
-    {
+    @Override
+    public String toString() {
         return "LockEntry{" +
                 "lockId='" + lockId + '\'' +
                 ", status=" + status +
