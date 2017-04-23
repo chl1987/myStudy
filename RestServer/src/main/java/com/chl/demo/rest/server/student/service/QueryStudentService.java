@@ -9,9 +9,7 @@ import java.util.List;
  * Created by caodongdong on 2017-03-26.
  */
 public interface QueryStudentService {
-    List<StudentInfo> query(StudentInfo info);
+    StudentInfo getById(Integer id);
 
-    List<StudentInfo> findByName(String name);
-
-    List<StudentInfo> findByCondition(StudentInfo info);
+    List<StudentInfo> find(String name, Integer age);
 }

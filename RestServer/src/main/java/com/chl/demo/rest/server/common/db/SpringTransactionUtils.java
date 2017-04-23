@@ -14,16 +14,14 @@ public class SpringTransactionUtils {
     }
 
     public static TransactionStatus startTransaction(PlatformTransactionManager transactionManager, DefaultTransactionDefinition transactionDefinition) {
-        TransactionStatus tx = transactionManager.getTransaction(transactionDefinition);
-        return tx;
+        return transactionManager.getTransaction(transactionDefinition);
     }
 
     public static TransactionStatus startTransaction(PlatformTransactionManager transactionManager, int propagationBehavior) {
         DefaultTransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
         transactionDefinition.setPropagationBehavior(propagationBehavior);
         transactionDefinition.setTimeout(60);
-        TransactionStatus tx = transactionManager.getTransaction(transactionDefinition);
-        return tx;
+        return transactionManager.getTransaction(transactionDefinition);
     }
 
     public static void commit(PlatformTransactionManager transactionManager, TransactionStatus tx) {

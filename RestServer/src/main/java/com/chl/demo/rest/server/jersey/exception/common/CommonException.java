@@ -29,6 +29,9 @@ public class CommonException extends RuntimeException {
         this.retMsg = retMsg;
     }
 
+    public CommonException(String retCode, String template, String... parameters) {
+    }
+
     public String getRetCode() {
         return retCode;
     }

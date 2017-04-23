@@ -1,6 +1,6 @@
 package com.chl.demo.rest.server.student.service.impl;
 
-import com.chl.demo.rest.server.student.dao.StudentDao;
+import com.chl.demo.rest.server.student.dao.StudentRepository;
 import com.chl.demo.rest.server.student.domain.StudentInfo;
 import com.chl.demo.rest.server.student.entity.StudentEntity;
 import com.chl.demo.rest.server.student.service.AddStudentService;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddStudentServiceImpl implements AddStudentService {
     @Autowired
-    private StudentDao studentDao;
+    private StudentRepository studentRepository;
 
     @Override
     public void saveStudent(StudentInfo studentInfo)
     {
         StudentEntity entity = new StudentEntity(studentInfo);
-        studentDao.save(entity);
+        studentRepository.save(entity);
     }
 }

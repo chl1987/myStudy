@@ -1,7 +1,8 @@
 package com.chl.demo.rest.server.student.service.impl;
 
+import com.chl.demo.rest.server.common.lang.StringUtils;
 import com.chl.demo.rest.server.jersey.exception.common.CommonException;
-import com.chl.demo.rest.server.student.dao.StudentDao;
+import com.chl.demo.rest.server.student.dao.StudentRepository;
 import com.chl.demo.rest.server.student.domain.StudentInfo;
 import com.chl.demo.rest.server.student.entity.StudentEntity;
 import com.chl.demo.rest.server.student.service.QueryStudentService;
@@ -20,36 +21,43 @@ import java.util.List;
 public class QueryStudentServiceImpl implements QueryStudentService {
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentRepository studentRepository;
 
     @Override
-    public List<StudentInfo> query(StudentInfo info) {
-        List<StudentEntity> studentEntities = studentDao.findByName(info.getName());
-        if (CollectionUtils.isEmpty(studentEntities)) {
-            throw new CommonException("-1", "student with name " + info.getName() + " is not exist!");
+    public List<StudentInfo> find(String name, Integer age) {
+        List<StudentEntity> studentEntities;
+        if (StringUtils.isEmpty(name)) {
+            studentEntities = studentRepository.find(age);
+            if (CollectionUtils.isEmpty(studentEntities)) {
+                throw new CommonException("-1", "student with age " + age + " is not exist!");
+            }
+        } else if (StringUtils.isEmpty(age)) {
+            studentEntities = studentRepository.find(name);
+            if (CollectionUtils.isEmpty(studentEntities)) {
+                throw new CommonException("-1", "student with name " + name + " is not exist!");
+            }
+        } else {
+            studentEntities = studentRepository.find(name, age);
+            if (CollectionUtils.isEmpty(studentEntities)) {
+                throw new CommonException("-1", "student with name " + name + " and age " + age + " is not exist!");
+            }
         }
 
         return entitiesToInfos(studentEntities);
     }
 
     @Override
-    public List<StudentInfo> findByName(String name) {
-        StudentInfo info = new StudentInfo();
-        info.setName(name);
-        return query(info);
+    public StudentInfo getById(Integer id) {
+        StudentEntity studentEntity = studentRepository.findOne(id);
+        if (studentEntity == null) {
+            throw new CommonException("-1", "student with name " + id + " is not exist!");
+        }
+        return new StudentInfo(studentEntity);
     }
 
-    @Override
-    public List<StudentInfo> findByCondition(StudentInfo info) {
-        StudentEntity entity = new StudentEntity(info);
-        return entitiesToInfos(studentDao.findByCondition(entity.getName(), entity.getAge()));
-    }
-
-    private List<StudentInfo> entitiesToInfos(List<StudentEntity> entities)
-    {
+    private List<StudentInfo> entitiesToInfos(List<StudentEntity> entities) {
         List<StudentInfo> infos = new ArrayList<>();
-        for(StudentEntity entity : entities)
-        {
+        for (StudentEntity entity : entities) {
             infos.add(new StudentInfo(entity));
         }
         return infos;

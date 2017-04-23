@@ -4,6 +4,7 @@ import com.chl.demo.rest.server.student.domain.StudentInfo;
 import com.chl.demo.rest.server.student.service.AddStudentService;
 import com.chl.demo.rest.server.student.service.DeleteStudentService;
 import com.chl.demo.rest.server.student.service.QueryStudentService;
+import com.chl.demo.rest.server.student.service.UpdateStudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +33,25 @@ public class StudentResource {
     @Autowired
     private DeleteStudentService deleteStudentService;
 
-    @DELETE
-    @Path("/{id}")
-    public void list(@PathParam("id") int id) {
-        deleteStudentService.deleteById(id);
-    }
+    @Autowired
+    private UpdateStudentService updateStudentService;
 
-    @POST
-    @Path("/batchQuery")
-    public List<StudentInfo> batchQuery(StudentInfo studentInfo) {
-        log.debug("receive student, {}", studentInfo);
-        return queryStudentService.findByCondition(studentInfo);
+    @GET
+    @Path("/{id}")
+    public StudentInfo get(@PathParam("id") int id) {
+        return queryStudentService.getById(id);
     }
 
     @GET
-    @Path("/{name}")
-    public List<StudentInfo> list(@PathParam("name") String name) {
-        return queryStudentService.findByName(name);
+    public List<StudentInfo> list(@QueryParam("name") String name, @QueryParam("age") Integer age) {
+        return queryStudentService.find(name, age);
+    }
+
+    @PUT
+    @Path("/add")
+    public void update(StudentInfo studentInfo) {
+        log.debug("receive student, {}", studentInfo);
+        updateStudentService.updateName(studentInfo);
     }
 
     @POST
@@ -56,5 +59,11 @@ public class StudentResource {
     public void save(StudentInfo studentInfo) {
         log.debug("receive student, {}", studentInfo);
         addStudentService.saveStudent(studentInfo);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void list(@PathParam("id") int id) {
+        deleteStudentService.deleteById(id);
     }
 }
