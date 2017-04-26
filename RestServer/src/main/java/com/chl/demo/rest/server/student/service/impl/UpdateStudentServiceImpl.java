@@ -1,9 +1,9 @@
 package com.chl.demo.rest.server.student.service.impl;
 
 import com.chl.demo.rest.server.jersey.exception.IllegalInputException;
-import com.chl.demo.rest.server.student.dao.StudentRepository;
-import com.chl.demo.rest.server.student.domain.StudentInfo;
-import com.chl.demo.rest.server.student.entity.StudentEntity;
+import com.chl.demo.rest.server.student.model.dao.StudentRepository;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
+import com.chl.demo.rest.server.student.roa.domain.StudentModifyReq;
 import com.chl.demo.rest.server.student.service.UpdateStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ public class UpdateStudentServiceImpl implements UpdateStudentService {
     private StudentRepository studentRepository;
 
     @Override
-    public void updateName(StudentInfo studentInfo) {
-        StudentEntity entity = studentRepository.findOne(studentInfo.getId());
+    public void modifyStudent(StudentModifyReq req) {
+        StudentEntity entity = studentRepository.findOne(req.getId());
         if (entity == null) {
-            throw new IllegalInputException("-1", "student with id " + studentInfo.getId() + " is not exist!");
+            throw new IllegalInputException("-1", "student with id " + req.getId() + " is not exist!");
         }
 
-        studentRepository.update(studentInfo.getId(), studentInfo.getName());
+        studentRepository.update(req.getId(), req.getName());
     }
 }

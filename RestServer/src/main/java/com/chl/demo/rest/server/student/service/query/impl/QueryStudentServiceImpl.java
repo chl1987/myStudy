@@ -1,11 +1,12 @@
-package com.chl.demo.rest.server.student.service.impl;
+package com.chl.demo.rest.server.student.service.query.impl;
 
 import com.chl.demo.rest.server.common.lang.StringUtils;
 import com.chl.demo.rest.server.jersey.exception.common.CommonException;
-import com.chl.demo.rest.server.student.dao.StudentRepository;
-import com.chl.demo.rest.server.student.domain.StudentInfo;
-import com.chl.demo.rest.server.student.entity.StudentEntity;
-import com.chl.demo.rest.server.student.service.QueryStudentService;
+import com.chl.demo.rest.server.student.model.dao.StudentDao;
+import com.chl.demo.rest.server.student.model.dao.StudentRepository;
+import com.chl.demo.rest.server.student.roa.domain.StudentInfo;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
+import com.chl.demo.rest.server.student.service.query.QueryStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -23,7 +24,18 @@ public class QueryStudentServiceImpl implements QueryStudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Override
+    @Autowired
+    private StudentDao studentDao;
+
+    public List<StudentInfo> find(StudentEntity condiftion) {
+        List<StudentEntity> studentEntities = studentDao.queryByCondition(condiftion);
+        if (CollectionUtils.isEmpty(studentEntities))
+            throw new CommonException("-1", "student with age " + condiftion.toString() + " is not exist!");
+        return entitiesToInfos(studentEntities);
+
+    }
+
+//    @Override
     public List<StudentInfo> find(String name, Integer age) {
         List<StudentEntity> studentEntities;
         if (StringUtils.isEmpty(name)) {

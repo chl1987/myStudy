@@ -1,6 +1,6 @@
 package com.chl.demo.rest.server.student.service;
 
-import com.chl.demo.rest.server.student.domain.StudentInfo;
+import com.chl.demo.rest.server.student.roa.domain.StudentInfo;
 
 /**
  * 业务定义：学生添加业务处理

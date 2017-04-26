@@ -1,6 +1,6 @@
-package com.chl.demo.rest.server.student.service;
+package com.chl.demo.rest.server.student.service.query;
 
-import com.chl.demo.rest.server.student.domain.StudentInfo;
+import com.chl.demo.rest.server.student.roa.domain.StudentInfo;
 
 import java.util.List;
 

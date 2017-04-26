@@ -1,6 +1,6 @@
-package com.chl.demo.rest.server.student.dao;
+package com.chl.demo.rest.server.student.model.dao;
 
-import com.chl.demo.rest.server.student.entity.StudentEntity;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
 
 import java.util.List;
 

@@ -1,11 +1,10 @@
-package com.chl.demo.rest.server.student.dao.impl;
+package com.chl.demo.rest.server.student.model.dao.impl;
 
-import com.chl.demo.rest.server.student.dao.StudentRepository;
-import com.chl.demo.rest.server.student.entity.StudentEntity;
+import com.chl.demo.rest.server.student.model.dao.StudentDao;
+import com.chl.demo.rest.server.student.model.dao.StudentRepository;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,14 +19,13 @@ import java.util.List;
  * Created by caodongdong on 2017-03-26.
  */
 @Service
-public class StudentDaoImpl extends CrudRepository<StudentEntity, Long>, JpaSpecificationExecutor {
+public class StudentDaoImpl implements StudentDao {
 
     @Autowired
     private StudentRepository studentRepository;
 
     public List<StudentEntity> queryByCondition(StudentEntity condition) {
-        List<StudentEntity> resultList = null;
-        Specification querySpecifi = new Specification<StudentEntity>() {
+        Specification<StudentEntity> querySpecifi = new Specification<StudentEntity>() {
             @Override
             public Predicate toPredicate(Root<StudentEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
@@ -44,8 +42,7 @@ public class StudentDaoImpl extends CrudRepository<StudentEntity, Long>, JpaSpec
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         };
-        resultList = studentRepository.findAll(querySpecifi);
-        return resultList;
+        return studentRepository.findAll(querySpecifi);
     }
 
 

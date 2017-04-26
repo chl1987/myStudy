@@ -1,6 +1,6 @@
-package com.chl.demo.rest.server.student.entity;
+package com.chl.demo.rest.server.student.model.entity;
 
-import com.chl.demo.rest.server.student.domain.StudentInfo;
+import com.chl.demo.rest.server.student.roa.domain.StudentInfo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

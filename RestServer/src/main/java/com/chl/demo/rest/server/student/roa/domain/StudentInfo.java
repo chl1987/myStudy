@@ -1,6 +1,6 @@
-package com.chl.demo.rest.server.student.domain;
+package com.chl.demo.rest.server.student.roa.domain;
 
-import com.chl.demo.rest.server.student.entity.StudentEntity;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
 
 /**
  * 接口请求消息体，只用于返回给接口调用者

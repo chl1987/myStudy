@@ -1,8 +1,8 @@
 package com.chl.demo.rest.server.student.service.impl;
 
-import com.chl.demo.rest.server.student.dao.StudentRepository;
-import com.chl.demo.rest.server.student.domain.StudentInfo;
-import com.chl.demo.rest.server.student.entity.StudentEntity;
+import com.chl.demo.rest.server.student.model.dao.StudentRepository;
+import com.chl.demo.rest.server.student.roa.domain.StudentInfo;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
 import com.chl.demo.rest.server.student.service.AddStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

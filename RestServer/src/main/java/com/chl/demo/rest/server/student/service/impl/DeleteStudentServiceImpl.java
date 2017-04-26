@@ -1,8 +1,8 @@
 package com.chl.demo.rest.server.student.service.impl;
 
 import com.chl.demo.rest.server.jersey.exception.IllegalInputException;
-import com.chl.demo.rest.server.student.dao.StudentRepository;
-import com.chl.demo.rest.server.student.entity.StudentEntity;
+import com.chl.demo.rest.server.student.model.dao.StudentRepository;
+import com.chl.demo.rest.server.student.model.entity.StudentEntity;
 import com.chl.demo.rest.server.student.service.DeleteStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

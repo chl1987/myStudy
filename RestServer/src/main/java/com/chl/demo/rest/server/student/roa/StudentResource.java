@@ -1,9 +1,10 @@
-package com.chl.demo.rest.server.student;
+package com.chl.demo.rest.server.student.roa;
 
-import com.chl.demo.rest.server.student.domain.StudentInfo;
+import com.chl.demo.rest.server.student.roa.domain.StudentInfo;
+import com.chl.demo.rest.server.student.roa.domain.StudentModifyReq;
 import com.chl.demo.rest.server.student.service.AddStudentService;
 import com.chl.demo.rest.server.student.service.DeleteStudentService;
-import com.chl.demo.rest.server.student.service.QueryStudentService;
+import com.chl.demo.rest.server.student.service.query.QueryStudentService;
 import com.chl.demo.rest.server.student.service.UpdateStudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class StudentResource {
-    static final private Logger log = LoggerFactory.getLogger(StudentResource.class);
+    static final private Logger LOG = LoggerFactory.getLogger(StudentResource.class);
 
     @Autowired
     private AddStudentService addStudentService;
@@ -38,7 +39,7 @@ public class StudentResource {
 
     @GET
     @Path("/{id}")
-    public StudentInfo get(@PathParam("id") int id) {
+    public StudentInfo get(@PathParam("id") Integer id) {
         return queryStudentService.getById(id);
     }
 
@@ -48,16 +49,15 @@ public class StudentResource {
     }
 
     @PUT
-    @Path("/add")
-    public void update(StudentInfo studentInfo) {
-        log.debug("receive student, {}", studentInfo);
-        updateStudentService.updateName(studentInfo);
+    public void update(StudentModifyReq req) {
+        LOG.debug("receive student, {}", req);
+        updateStudentService.modifyStudent(req);
     }
 
     @POST
     @Path("/add")
     public void save(StudentInfo studentInfo) {
-        log.debug("receive student, {}", studentInfo);
+        LOG.debug("receive student, {}", studentInfo);
         addStudentService.saveStudent(studentInfo);
     }
 
